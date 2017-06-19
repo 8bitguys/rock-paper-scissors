@@ -1,40 +1,20 @@
-var userChoice = prompt("Do you choose rock, paper or scissors?");
-var computerChoice = Math.random();
-if (computerChoice <0.34){
-    computerChoice = "rock";
-}else if(computerChoice <=0.67){
-    computerChoice = "paper";
-}
-else{
-    computerChoice = "scissors";
-}
-var compare = function(choice1,choice2){
-    if(choice1===choice2){
-        return "The result is a tie!";
-    }
-    if(choice1==="rock"){
-        if(choice2==="scissors"){
-            return "rock wins";
-        }
-        else{
-            return "paper wins";
-        }
-    }
-    if(choice1==="paper"){
-        if(choice2==="rock"){
-            return "paper wins";
-        }
-        else{
-            return "scissors wins";
-        }
-    }
-    if(choice1==="scissors"){
-        if(choice2==="rock"){
-            return "rock wins";
-        }
-        else{
-            return "scissors wins";
-        }
-    }
+var gestures = ["rock", "paper", "scissors", "lizard", "spock"];
+
+var rules = {
+    rock:     { scissors: "breaks",  lizard: "crushes"     },
+    paper:    { rock:     "covers",  spock:  "disproves"   },
+    scissors: { paper:    "cuts",    lizard: "decapitates" },
+    lizard:   { paper:    "eats",    spock:  "poisons"     },
+    spock:    { scissors: "smashes", rock:   "vaporizes"   }
 };
-compare(userChoice,computerChoice);
+
+function play(index) {
+    var your = gestures[index];
+    var mine = gestures[Math.floor(5 * Math.random())];
+    if (your === mine) return alert("Draw. We both played " + your + ".");
+    var win = rules[your].hasOwnProperty(mine);
+    var result = win ? "win" : "lose";
+    var a = win ? your : mine;
+    var b = win ? mine : your;
+    alert("You " + result + ": " + a + " " + rules[a][b] + " " + b + ".");
+}
